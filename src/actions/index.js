@@ -85,3 +85,39 @@ export const addPost = ({ title, content }) => {
       })
   }
 }
+
+export const FETCH_POST_SUCCESS = 'FETCH_POST_SUCCESS'
+export const IS_FETCHING_POST = 'IS_FETCHING_POST'
+export const FETCH_POST_FAILURE = 'FETCH_POST_FAILURE'
+
+// action creators
+const fetchPostSuccess = post => ({
+  type: FETCH_POST_SUCCESS,
+  post
+})
+
+const fetchPostFailure = (bool) => ({
+  type: FETCH_POST_FAILURE,
+  fetchPostFailure: bool
+})
+
+const isFetchingPost = (bool) => ({
+  type: IS_FETCHING_POST,
+  isFetchingPost: bool
+})
+
+// async action creator
+export const getPost = (id) => {
+  return (dispatch) => {
+    dispatch(isFetchingPost(true))
+    return axios.get(`${apiUrl}/posts/${id}`)
+      .then((response) => {
+        dispatch(isFetchingPost(false))
+        dispatch(fetchPostSuccess(response.data))
+      })
+      .catch((error) => {
+        dispatch(isFetchingPost(false))
+        dispatch(fetchPostFailure(true))
+      })
+  }
+}

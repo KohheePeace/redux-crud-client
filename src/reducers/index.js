@@ -7,6 +7,12 @@ import {
   addPostFailure
 } from './postsReducer'
 
+import {
+  post,
+  fetchPostFailure,
+  isFetchingPost
+} from './postReducer'
+
 /* 公式ドキュメントのreducersの定義 */
 // Reducers specify how the application's state changes in response to actions sent to the store.
 // Remember that actions only describe what happened, but don't describe how the application's state changes.
@@ -19,5 +25,8 @@ export default combineReducers({
   fetchPostsFailure,
   isFetchingPosts,
   isAddingPost,
-  addPostFailure
+  addPostFailure,
+  post,
+  fetchPostFailure,
+  isFetchingPost
 })
