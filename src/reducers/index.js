@@ -2,7 +2,9 @@ import { combineReducers } from 'redux'
 import {
   posts,
   fetchPostsFailure,
-  isFetchingPosts
+  isFetchingPosts,
+  isAddingPost,
+  addPostFailure
 } from './postsReducer'
 
 /* 公式ドキュメントのreducersの定義 */
@@ -15,5 +17,7 @@ import {
 export default combineReducers({
   posts,
   fetchPostsFailure,
-  isFetchingPosts
+  isFetchingPosts,
+  isAddingPost,
+  addPostFailure
 })

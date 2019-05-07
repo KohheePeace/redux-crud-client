@@ -1,4 +1,5 @@
 import axios from 'axios'
+import history from '../history'
 
 const apiUrl = 'http://localhost:3001'
 
@@ -34,7 +35,7 @@ const isFetchingPosts = (bool) => ({
 export const getPosts = () => {
   return (dispatch) => {
     dispatch(isFetchingPosts(true))
-    return axios.get(`${apiUrl}/posts.json`)
+    return axios.get(`${apiUrl}/posts`)
       .then((response) => {
         dispatch(isFetchingPosts(false))
         dispatch(fetchPostsSuccess(response.data))
@@ -42,6 +43,45 @@ export const getPosts = () => {
       .catch((error) => {
         dispatch(isFetchingPosts(false))
         dispatch(fetchPostsFailure(true))
+      })
+  }
+}
+
+export const IS_ADDING_POST = 'IS_ADDING_POST'
+export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS'
+export const ADD_POST_FAILURE = 'ADD_POST_FAILURE'
+
+const isAddingPost = (bool) => ({
+  type: IS_ADDING_POST,
+  isAddingPost: bool
+})
+
+const addPostSuccess = (post) => ({
+  type: ADD_POST_SUCCESS,
+  post
+})
+
+const addPostFailure = (bool) => ({
+  type: ADD_POST_FAILURE,
+  addPostFailure: bool
+})
+
+export const addPost = ({ title, content }) => {
+  return (dispatch) => {
+    dispatch(isAddingPost(true))
+    return axios.post(`${apiUrl}/posts`, {title, content})
+      .then((response) => {
+        dispatch(isAddingPost(false))
+        const { data } = response
+        const newPost = { id: data.id, title: data.title, content: data.content }
+        dispatch(addPostSuccess(newPost))
+      })
+      .then(() => {
+        history.push("/")
+      })
+      .catch(error => {
+        dispatch(isAddingPost(false))
+        dispatch(addPostFailure(true))
       })
   }
 }
