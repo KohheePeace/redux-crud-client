@@ -18,7 +18,18 @@ class TopPage extends Component {
   }
 
   render() {
-    const { posts } = this.props
+    const { posts, isFetchingPosts, fetchPostsFailure } = this.props
+    if (isFetchingPosts) {
+      return (
+        <p>Fetching posts...</p>
+      )
+    }
+
+    if (fetchPostsFailure) {
+      return (
+        <p>Failed to fetch posts...</p>
+      )
+    }
 
     if(posts.length) {
       return (
@@ -46,8 +57,8 @@ class TopPage extends Component {
 
 /* Storeのposts stateをTopPageコンポーネントのposts propsに渡したい */
 const mapStateToProps = (state) => {
-  const { posts } = state
-  return { posts }
+  const { posts, isFetchingPosts, fetchPostsFailure } = state
+  return { posts, isFetchingPosts, fetchPostsFailure }
 }
 
 /* ReduxのStoreと、このTopPageコンポーネントに接続する */

@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux'
 import {
-  posts
+  posts,
+  fetchPostsFailure,
+  isFetchingPosts
 } from './postsReducer'
 
 /* 公式ドキュメントのreducersの定義 */
@@ -9,6 +11,9 @@ import {
 
 /* これが、src/index.js　でstoreと繋がってるのを忘れずに! */
 /* storeが意識しずらいのが理解し難い原因かも... */
+/* storeをそれ自身ではなく、変化するもの(reducers)で外堀から定義していく */
 export default combineReducers({
-  posts
+  posts,
+  fetchPostsFailure,
+  isFetchingPosts
 })
