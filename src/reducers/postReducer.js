@@ -1,7 +1,8 @@
 import {
   IS_FETCHING_POST,
   FETCH_POST_SUCCESS,
-  FETCH_POST_FAILURE
+  FETCH_POST_FAILURE,
+  UPDATE_POST_SUCCESS
 } from '../actions';
 
 export function isFetchingPost(state = false, action) {
@@ -16,6 +17,8 @@ export function isFetchingPost(state = false, action) {
 export function post(state = {}, action) {
   switch (action.type) {
       case FETCH_POST_SUCCESS:
+        return action.post;
+      case UPDATE_POST_SUCCESS:
         return action.post;
       default:
         return state;

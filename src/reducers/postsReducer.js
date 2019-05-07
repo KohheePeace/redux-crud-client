@@ -5,7 +5,8 @@ import {
   ADD_POST_SUCCESS,
   IS_ADDING_POST,
   ADD_POST_FAILURE,
-  DELETE_POST_SUCCESS
+  DELETE_POST_SUCCESS,
+  UPDATE_POST_SUCCESS
 } from '../actions'
 
 export function isFetchingPosts(state = false, action) {
@@ -34,6 +35,15 @@ export function posts(state = [], action) {
         return [action.post, ...state]; // ADD_POST_SUCCESSアクションがdispatchされたら、action.postをposts stateの先頭に追加した配列を返すよ~
       case DELETE_POST_SUCCESS:
         return state.filter(post => post.id !== action.id);
+      case UPDATE_POST_SUCCESS: // https://hackernoon.com/redux-patterns-add-edit-remove-objects-in-an-array-6ee70cab2456
+        return state.map((post) => {
+          if (post.id === action.post.id) {
+            return {
+              ...post,
+              ...action.post
+            }
+          } else return post;
+        })
       default: //なにもされてないときは、デフォルトの[]を返すよ~
         return state;
   }

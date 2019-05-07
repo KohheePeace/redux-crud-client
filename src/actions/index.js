@@ -140,3 +140,24 @@ export const deletePost = (id) => {
       })
   }
 }
+
+export const UPDATE_POST_SUCCESS = 'UPDATE_POST_SUCCESS'
+
+const updatePostSuccess = post => ({
+  type: UPDATE_POST_SUCCESS,
+  post
+})
+
+export const updatePost = (post) => {
+  const { id, title, content } = post
+  return (dispatch) => {
+    return axios.patch(`${apiUrl}/posts/${id}`, {title, content})
+      .then(response => {
+        const data = response.data
+        dispatch(updatePostSuccess(data))
+      })
+      .then(() => {
+        history.push(`/posts/${post.id}`)
+      })
+  }
+}
