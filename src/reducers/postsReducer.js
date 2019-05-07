@@ -4,7 +4,8 @@ import {
   FETCH_POSTS_FAILURE,
   ADD_POST_SUCCESS,
   IS_ADDING_POST,
-  ADD_POST_FAILURE
+  ADD_POST_FAILURE,
+  DELETE_POST_SUCCESS
 } from '../actions'
 
 export function isFetchingPosts(state = false, action) {
@@ -31,6 +32,8 @@ export function posts(state = [], action) {
         return action.posts
       case ADD_POST_SUCCESS:
         return [action.post, ...state]; // ADD_POST_SUCCESSアクションがdispatchされたら、action.postをposts stateの先頭に追加した配列を返すよ~
+      case DELETE_POST_SUCCESS:
+        return state.filter(post => post.id !== action.id);
       default: //なにもされてないときは、デフォルトの[]を返すよ~
         return state;
   }

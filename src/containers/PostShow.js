@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { getPost } from '../actions'
+import { getPost, deletePost } from '../actions'
 
 class PostShow extends Component {
   componentDidMount() {
@@ -31,6 +31,9 @@ class PostShow extends Component {
           <Link to={`/posts/${post.id}/edit`}>
             Edit
           </Link>
+          <button type="button" onClick={() => this.props.deletePost(post.id)}>
+            Delete
+          </button>
         </div>
         <hr/>
       </div>
@@ -43,6 +46,6 @@ class PostShow extends Component {
 const mapStateToProps = ({ post, isFetchingPost, fetchPostFailure }) => ({ post, isFetchingPost, fetchPostFailure })
 
 /* mapDispatchToPropsを使ってみる... */
-const mapDispatchToProps = { getPost }
+const mapDispatchToProps = { getPost, deletePost }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PostShow)

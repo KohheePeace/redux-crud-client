@@ -121,3 +121,22 @@ export const getPost = (id) => {
       })
   }
 }
+
+export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS'
+
+const deletePostSuccess = id => ({
+  type: DELETE_POST_SUCCESS,
+  id
+})
+
+export const deletePost = (id) => {
+  return (dispatch) => {
+    return axios.delete(`${apiUrl}/posts/${id}`)
+      .then(response => {
+        dispatch(deletePostSuccess(id))
+      })
+      .then(() => {
+        history.push("/")
+      })
+  }
+}
